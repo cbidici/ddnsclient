@@ -1,0 +1,7 @@
+googledomains:
+- hostname: www.aaa.com
+  username: usernameaaa
+  password: passwordaaa
+- hostname: www.bbb.com
+  username: usernamebbb
+  password: passwordbbb
