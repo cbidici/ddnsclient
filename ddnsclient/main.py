@@ -75,10 +75,11 @@ def _initialize():
 
 
 def _update_google_dns(hostname, username, password, ipaddress):
-    _get_url(
+    result = _get_url(
         _GOOGLE_DOMAINS_NIC_UPDATE.format(username, password),
         {"hostname": hostname, "ip": ipaddress},
     )
+    print("Hostname {} IP {} Update Result {}".format(hostname, ipaddress, result))
 
 
 def _update_dns(protocol, domains):
