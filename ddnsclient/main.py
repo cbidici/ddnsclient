@@ -77,8 +77,6 @@ def _update_google_dns(hostname, username, password, ipaddress):
 
 
 def _update_dns(protocol, domains):
-    print(protocol)
-    print(domains)
     if protocol == "googledomains":
         for domain in domains:
             _update_google_dns(
