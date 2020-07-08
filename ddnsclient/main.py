@@ -1,11 +1,13 @@
 import os
 import requests
 import tempfile
+import yaml
 
 _GOOGLE_CHECK_IP = "https://domains.google.com/checkip"
 _GOOGLE_DOMAINS_NIC_UPDATE = "https://{}:{}@domains.google.com/nic/update"
 _DATA_FILE = "ddnsclient.dat"
 _DATA_DIR = "ddnsclient"
+_HOSTNAMES = "hostnames.yaml"
 _CURRENT_IP = ""
 _CONFIG = dict()
 
@@ -32,22 +34,14 @@ def _get_data_file_path():
     return os.path.join(_get_data_file_dir_path(), _DATA_FILE)
 
 
+def _get_project_path():
+    return os.sep.join(os.path.dirname(os.path.realpath(__file__)).split(os.sep)[1:-1])
+
+
 def _load_config():
     global _CONFIG
-    _CONFIG = {
-        "googledomains": [
-            {
-                "username": "xxxx",
-                "password": "xxxx",
-                "hostname": "www.com",
-            },
-            {
-                "username": "xxxx",
-                "password": "xxxx",
-                "hostname": "ccc.com",
-            }
-        ]
-    }
+    with open(os.path.join(os.sep, _get_project_path(), _HOSTNAMES)) as file:
+        _CONFIG = yaml.load(file, Loader=yaml.FullLoader)
 
 
 def _get_url(url, params=None):
@@ -83,6 +77,8 @@ def _update_google_dns(hostname, username, password, ipaddress):
 
 
 def _update_dns(protocol, domains):
+    print(protocol)
+    print(domains)
     if protocol == "googledomains":
         for domain in domains:
             _update_google_dns(
